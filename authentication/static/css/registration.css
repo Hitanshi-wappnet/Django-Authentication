@@ -1,0 +1,71 @@
+body {
+    font-size: 25px;
+    background-color:rgb(223, 255, 255);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/*applied to container class*/
+.container{
+   justify-content: center;
+   text-align: center;
+   border:3px solid black;
+   border-radius:10px;
+   width:800px;
+   margin: auto;
+   width: 50%;
+   margin-top:10px;
+}
+
+/*applied to row class*/
+.row{
+    margin:6px;
+    padding:10px;
+}
+
+/*applied to h3 element from container class.*/
+.container h3 {
+    font-size: 30px;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0 0 20px;
+    font-weight: bold;
+}
+
+/*applied to data class.*/
+.data{
+    height:30px;
+    width:300px;
+    border-color: black;
+    border-radius: 10px;
+    margin:12px;
+    font-size:15px;
+    text-align:center;
+}
+
+/*Applied to btn class of Button element*/
+.btn{
+    font: 24px Georgia, Verdana;
+    margin-bottom: 10px;
+    padding: 8px 10px 9px;
+    border: 2px solid red;
+    background-color:rgb(255, 178, 171);
+    cursor: pointer;
+    border-radius:10px;
+}
+
+/* Change the background and border-radius on hover */
+.btn:hover {
+    background: rgb(255, 167, 159);
+    border-radius:4px solid red;
+}
+
+/*Applied to a tag inside btn class*/
+.btn a{
+    text-decoration:none;
+}
+
+.btn:active {
+    background-color:rgb(255, 110, 97);;
+}

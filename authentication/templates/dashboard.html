@@ -1,0 +1,27 @@
+{% load static %}   <!--load static so that we can use static folder files-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!--Load Static Files and use dashboard.css file-->
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+</head>
+<body>
+
+    <!--Check if user is authenticated then navigate user to dashboard.-->
+    {% if user.is_authenticated %}
+    <h1>Welcome to Dashboard {{name}}</h1>
+    <h3>You are successfully logged in.</h3>
+    <h3>Welcome</h3>
+    <div class="row">
+        <label class="label">If you want to logout Please Click on Logout button.</label>
+        <div class="col">
+            <button type="submit" class="btn" id="logout"><a href="{% url 'logout'%}">Logout</a></button>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>

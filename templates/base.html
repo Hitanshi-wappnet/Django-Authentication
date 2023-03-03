@@ -1,0 +1,28 @@
+{% load static %}   <!--load static so that we can use static folder files-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!--add CSS file with the help of static-->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'registration'%}">Registration</a>
+                <a href="{% url 'login'%}">Login</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!--body block which replaces by another HTML Files.-->
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

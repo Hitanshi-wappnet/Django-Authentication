@@ -1,0 +1,40 @@
+/*The CSS to apply for dashboard.html*/
+
+body {
+    font-size: 25px;
+    background-color:rgb(223, 255, 255);
+    height: 100%;
+    margin: 10px 0;
+    padding: 0;
+}
+
+/*Applied to btn class of Button element*/
+.btn{
+    font: 24px Georgia, Verdana;
+    margin-bottom: 10px;
+    padding: 8px 10px 9px;
+    border: 2px solid red;
+    background-color:rgb(255, 178, 171);
+    cursor: pointer;
+    border-radius:10px;
+}
+
+/* Change the background and border-radius on hover */
+.btn:hover {
+    background: rgb(255, 167, 159);
+    border-radius:4px solid red;
+}
+
+/*Applied to a tag inside btn class*/
+.btn a{
+    text-decoration:none;
+}
+
+/*applied to id logout of button.*/
+#logout{
+    margin-top: 10px;
+    margin-right: 5px;
+    position:absolute;
+    top:0;
+    right:0;
+}
