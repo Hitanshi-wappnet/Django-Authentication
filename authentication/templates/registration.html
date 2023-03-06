@@ -11,15 +11,15 @@
     <title>Registration Page</title>
     <!--add CSS file with the help of static-->
     <link rel="stylesheet" href="{% static 'css/registration.css' %}" />
+    <!-- <script defer src="{% static 'js/form.js' %}"></script> -->
 </head>
-
 <body>
 
     <!--Display messages to user-->
     {% for msg in messages %}
     <strong> {{ msg }}</strong>
     {% endfor %}
-    <form method="POST" class="post-form" action="/home/registration/">
+    <form method="POST" name="myform" id="form" class="post-form" action="/home/registration/">
         {% csrf_token %}        <!--add csrf_token because of POST method-->
         <div class="container">
             <br>
@@ -31,44 +31,50 @@
             </div>
             <div class="row">
                 <div class="col">
-                    firstname:<input type="text" class="data" name="firstname" id="id_fname" required maxlength="20"
-                        required value={{details.firstname}}>
+                    firstname:<input id="firstname" type="text" class="data" name="firstname" maxlength="20"
+                    value={{details.firstname}}>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    lastname:<input type="text" class="data" name="lastname" id="id_lname" required maxlength="100"
-                        required value={{details.lastname}}>
+                    lastname:<input type="text" class="data" name="lastname" id="id_lname" maxlength="100"
+                        value={{details.lastname}}>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    email:<input type="email" class="data" name="email" id="id_email" required maxlength="254" required
+                    email:<input type="text" class="data" name="email" id="id_email" maxlength="254"
                         value={{details.email}}>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    Username:<input type="text" class="data" name="username" id="id_username" required maxlength="15"
-                        required value={{details.username}}>
+                    Username:<input type="text" class="data" name="username" id="id_username" maxlength="15"
+                        value={{details.username}}>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    Password:<input type="text" class="data" name="password" id="id_password" required maxlength="100"
-                        required value={{details.password}}>
+                    Password:<input type="password" class="data" name="password" id="id_password" maxlength="100"
+                        value={{details.password}}>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    Confirm Password:<input type="text" class="data" name="confirm_password" id="id_confirmpassword"
-                        required maxlength="15" required value={{details.confirm_password}}>
+                    Confirm Password:<input type="password" class="data" name="confirm_password" id="id_confirmpassword"
+                        maxlength="15" value={{details.confirm_password}}>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
                 <label class="label"></label>
                 <div class="col">
-                    <button type="submit" class="btn" id="Register">Register</button>
+                    <button type="submit" class="btn" id="submit">Register</button>
                 </div>
             </div>
         </div>
