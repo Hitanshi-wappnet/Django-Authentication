@@ -23,34 +23,28 @@ def registration(request):
         confirm_password = request.POST["confirm_password"]
 
         details = {
-                "username": username,
-                "email": email,
-                "password": password,
-                "firstname": fname,
-                "lastname": lname,
-                "confirm_password": confirm_password,
-            }
-        
+            "username": username,
+            "email": email,
+            "password": password,
+            "firstname": fname,
+            "lastname": lname,
+            "confirm_password": confirm_password,
+        }
+
         # checking the uniqueness of username.
         if User.objects.filter(username=username):
-            messages.error(request,
-                           "User name already exists!Please try another")
-            return render(request, "registration.html",
-                          context={"details": details})
+            messages.error(request, "User name already exists!Please try another")
+            return render(request, "registration.html", context={"details": details})
 
         # checking the uniqueness of email.
         if User.objects.filter(email=email):
-            messages.error(request,
-                           "Email already exists!Please try another")
-            return render(request, "registration.html",
-                          context={"details": details})
+            messages.error(request, "Email already exists!Please try another")
+            return render(request, "registration.html", context={"details": details})
 
         # checking password and confirm password are same or not.
         if password != confirm_password:
-            messages.error(request,
-                           "Password and Confirm Password didn't match")
-            return render(request, "registration.html",
-                          context={"details": details})
+            messages.error(request, "Password and Confirm Password didn't match")
+            return render(request, "registration.html", context={"details": details})
 
         # Store the form data in objects.
         myuser = User.objects.create_user(username, email, password)
@@ -104,18 +98,34 @@ def addbooks(request):
         bookname = request.POST["bookname"]
         authorname = request.POST["authorname"]
         bookimage = request.POST["bookimage"]
-        print(bookimage)
-        
-        details = BookDetails(user=user, bookname=bookname,
-                              authorname=authorname, bookimage=bookimage)
+
+        details = BookDetails(
+            user=user, bookname=bookname, authorname=authorname,
+            bookimage=bookimage
+        )
         details.save()
-        return redirect('/home/dashboard/')
+        return redirect("/home/dashboard/")
     else:
-        return render(request, 'dashboard.html')
+        return render(request, "dashboard.html")
 
 
 @login_required
 def dashboard(request):
     books = BookDetails.objects.filter(user=request.user)
-    context = {'books': books}
-    return render(request, 'dashboard.html', context)
+    context = {"books": books}
+    return render(request, "dashboard.html", context)
+
+
+def edit(request, id):
+    BookDetails.objects.filter(id=id).update(
+        bookname=request.POST["bookname"],
+        authorname=request.POST["authorname"],
+        bookimage=request.POST["bookimage"],
+    )
+    return redirect("/home/dashboard/")
+
+
+def delete(request, id):
+    book = BookDetails.objects.get(id=id)
+    book.delete()
+    return redirect("/home/dashboard")

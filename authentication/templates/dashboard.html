@@ -7,11 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+
   <!--Load Static Files and use dashboard.css file-->
   <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -82,24 +82,72 @@
 
   <h1 class="mt-5 bg-light">My Books</h1>
 
-<table class="table table-striped table-bordered table-sm">
-  <thead class="bg-primary">
-    <tr>
-      <th>Name</th>
-      <th>Author</th>
-      <th>Book-image</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for book in books %}
-    <tr>
+  <table class="table table-striped table-bordered table-sm">
+    <thead class="bg-primary">
+      <tr>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+      <tr>
         <td>{{ book.bookname }}</td>
         <td>{{ book.authorname }}</td>
-        <td>{{ book.bookimage }}</td>
+        <td>
+          <!-- Edit Section Starts here-->
+
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleEdit{{ book.id }}">
+            EDIT
+          </button>
+
+          <div class="modal fade" id="exampleEdit{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Book Here</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <form method="POST" name="myform" id="form" class="post-form" action="{% url 'edit' book.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Book Name </label>
+                      <input type="text" class="form-control" id="exampleInputBook1" aria-describedby="bookHelp"
+                        placeholder="Enter Book Name" name="bookname" value="{{ book.bookname }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Author Name</label>
+                      <input type="text" class="form-control" id="exampleInputauthor1" placeholder="Enter Author name here"
+                        name="authorname" value="{{ book.authorname }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Add Book Image</label>
+                      <input type="file" class="form-control" id="exampleInputimage1" name="bookimage" 
+                      value="{{book.bookimage}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!--Navigate to Delete Function -->
+          <button class="btn"><a href="/home/delete/{{ book.id }}">Delete</a></button>
+        </td>
       </tr>
       {% endfor %}
       {% endif %}
     </tbody>
   </table>
- </body>
- </html>
+</body>
+</html>
