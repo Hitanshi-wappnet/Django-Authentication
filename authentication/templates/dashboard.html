@@ -91,7 +91,6 @@
     </tr>
   </thead>
   <tbody>
-    {% if books %}
     {% for book in books %}
     <tr>
         <td>{{ book.bookname }}</td>
@@ -102,6 +101,5 @@
       {% endif %}
     </tbody>
   </table>
-  {% endif %} 
  </body>
  </html>

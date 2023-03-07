@@ -119,7 +119,7 @@ def dashboard(request):
     print("dashboa")
     books = BookDetails.objects.filter(user=request.user)
     context = {'books': books}
-    return render(request, 'dashboard', context)
+    return render(request, 'dashboard.html', context)
 
 
 
