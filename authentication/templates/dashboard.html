@@ -34,7 +34,7 @@
   </nav>
   <!--Check if user is authenticated then navigate user to dashboard.-->
   {% if user.is_authenticated %}
-  <h3>Welcome to Dashboard {{name}}</h3>
+  <h3>Welcome to Dashboard {{ request.user.first_name }}</h3>
   <h3>You are successfully logged in.</h3>
   <h3>Welcome</h3>
 

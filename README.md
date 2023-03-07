@@ -11,6 +11,8 @@ To install Django use following command.
 
 ## Run files
 
+Need to change mysql client credintials in setting.py file.
+
 Run this files using command-python manage.py runserver
 
 After this navigate to home page using 127.0.0.1:8000/home/ URL.

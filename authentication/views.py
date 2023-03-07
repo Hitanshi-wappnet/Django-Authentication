@@ -81,8 +81,7 @@ def signin(request):
         else display error message and keep the user in login page."""
         if user is not None:
             login(request, user)
-            fname = user.first_name
-            return render(request, "dashboard.html", {"name": fname})
+            return redirect("/home/dashboard/")
         else:
             messages.error(request, "Your Username or Password is Wrong")
             return redirect("/home/login")
@@ -104,7 +103,8 @@ def addbooks(request):
         user = request.user
         bookname = request.POST["bookname"]
         authorname = request.POST["authorname"]
-        bookimage = request.FILES.get("bookimage")
+        bookimage = request.POST["bookimage"]
+        print(bookimage)
         
         details = BookDetails(user=user, bookname=bookname,
                               authorname=authorname, bookimage=bookimage)
@@ -116,10 +116,6 @@ def addbooks(request):
 
 @login_required
 def dashboard(request):
-    print("dashboa")
     books = BookDetails.objects.filter(user=request.user)
     context = {'books': books}
     return render(request, 'dashboard.html', context)
-
-
-
