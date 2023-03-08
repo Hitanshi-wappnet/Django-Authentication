@@ -11,15 +11,10 @@
     <title>Registration Page</title>
     <!--add CSS file with the help of static-->
     <link rel="stylesheet" href="{% static 'css/registration.css' %}" />
-    <!-- <script defer src="{% static 'js/form.js' %}"></script> -->
 </head>
 <body>
-
-    <!--Display messages to user-->
-    {% for msg in messages %}
-    <strong> {{ msg }}</strong>
-    {% endfor %}
-    <form method="POST" name="myform" id="form" class="post-form" action="/home/registration/">
+    <form method="POST" name="myForm" id="form" class="post-form" onsubmit="return validateForm()"
+    action="/home/registration/">
         {% csrf_token %}        <!--add csrf_token because of POST method-->
         <div class="container">
             <br>
@@ -29,57 +24,60 @@
                     <h3>Registration Page</h3>
                 </div>
             </div>
+            {% for msg in messages %}
+            <div class="msgerror"> {{ msg }}</div>
+            {% endfor %}
             <div class="row">
-                <div class="col">
+                <div class="col" id="fname">
                     firstname:<input id="firstname" type="text" class="data" name="firstname" maxlength="20"
-                    value={{details.firstname}}>
+                    value="{{ details.firstname }}">
                     <div class="error"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col" id="lname">
                     lastname:<input type="text" class="data" name="lastname" id="id_lname" maxlength="100"
-                        value={{details.lastname}}>
+                        value="{{ details.lastname }}">
                     <div class="error"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    email:<input type="text" class="data" name="email" id="id_email" maxlength="254"
-                        value={{details.email}}>
+                <div class="col" id="femail">
+                    email:<input type="email" class="data" name="email" id="id_email" maxlength="254"
+                        value="{{ details.email }}">
                     <div class="error"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col" id="fuser">
                     Username:<input type="text" class="data" name="username" id="id_username" maxlength="15"
-                        value={{details.username}}>
+                        value=" {{ details.username }} ">
                     <div class="error"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col" id="fpass">
                     Password:<input type="password" class="data" name="password" id="id_password" maxlength="100"
-                        value={{details.password}}>
+                        value="{{ details.password }}">
                     <div class="error"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col" id="cpass">
                     Confirm Password:<input type="password" class="data" name="confirm_password" id="id_confirmpassword"
-                        maxlength="15" value={{details.confirm_password}}>
+                        maxlength="15" value="{{ details.confirm_password }}">
                     <div class="error"></div>
                 </div>
             </div>
             <div class="row">
                 <label class="label"></label>
                 <div class="col">
-                    <button type="submit" class="btn" id="submit">Register</button>
+                    <button type="submit" class="btn" id="submit" value="Submit">Register</button>
                 </div>
             </div>
         </div>
     </form>
 </body>
-
+<script src="{% static 'js/validation.js' %}"></script>
 </html>
 {% endblock %}      <!--End of a body block-->

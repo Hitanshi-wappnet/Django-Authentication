@@ -69,3 +69,11 @@ body {
 .btn:active {
     background-color:rgb(255, 110, 97);;
 }
+
+.error {
+    color: red;
+}
+
+.msgerror {
+    color: red;
+}
