@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from authentication.models import BookDetails
 
@@ -97,11 +97,10 @@ def addbooks(request):
         user = request.user
         bookname = request.POST["bookname"]
         authorname = request.POST["authorname"]
-        bookimage = request.POST["bookimage"]
+        bookimage = request.FILES.get('bookimage')
 
         details = BookDetails(
-            user=user, bookname=bookname, authorname=authorname,
-            bookimage=bookimage
+            user=user, bookname=bookname, authorname=authorname, bookimage=bookimage
         )
         details.save()
         return redirect("/home/dashboard/")
@@ -120,12 +119,36 @@ def edit(request, id):
     BookDetails.objects.filter(id=id).update(
         bookname=request.POST["bookname"],
         authorname=request.POST["authorname"],
-        bookimage=request.POST["bookimage"],
+        bookimage=request.FILES.get('bookimage'),
     )
+    messages.success(request, "Data updated successfully")
     return redirect("/home/dashboard/")
 
 
 def delete(request, id):
     book = BookDetails.objects.get(id=id)
     book.delete()
+    messages.success(request, "Data Deleted successfully")
     return redirect("/home/dashboard")
+
+
+def changepassword(request):
+
+    # Current user password enterd by user
+    oldpassword = request.POST["oldpassword"]
+
+    # New Password entered by user in html
+    newpassword1 = request.POST["newpassword1"]
+    newpassword2 = request.POST["newpassword2"]
+
+    # check if stored password and entered password are matched
+    u = User.objects.get(username=request.user.username)
+    if u.check_password(oldpassword) and newpassword1 == newpassword2:
+        u.set_password(newpassword1)
+        u.save()
+        messages.success(request, "Your Password has changed successfully")
+        update_session_auth_hash(request, u)
+        return redirect("/home/dashboard/")
+    else:
+        messages.error(request, "Your Password is Wrong")
+        return redirect("/home/dashboard/")

@@ -1,16 +1,9 @@
 {% extends 'base.html' %}   <!--Extends base.html File-->
 {% load static %}   <!--load static so that we can use static folder files-->
-{% block body %}    <!--body block which replaces in base.html body-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <!--add CSS file with the help of static-->
+    {% block css %}     
     <link rel="stylesheet" href="{% static 'css/registration.css' %}" />
-</head>
+    {% endblock %}
+    {% block body %}    <!--body block which replaces in base.html body-->
 <body>
 
     <!--Display messages to user-->
@@ -18,7 +11,7 @@
     <strong>{{ msg }}</strong>
     {% endfor %}
 
-    <form method="POST" class="post-form" action="/home/login/">
+    <form method="POST" name="myForm" class="post-form" action="/home/login/" onsubmit="return validateForm()">
         {% csrf_token %}    <!--add csrf_token because of POST method-->
         <div class="container">
             <br>
@@ -29,13 +22,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    Username:<input type="text" class="data" name="username" id="id_username" required maxlength="15" required/>
+                <div class="col" id="username">
+                    Username:<input type="text" class="data" name="username" id="id_username" 
+                     maxlength="15"/>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    Password:<input type="password" class="data" name="password" id="id_password" required maxlength="100" required/>
+                <div class="col" id="password">
+                    Password:<input type="password" class="data" name="password" id="id_password" 
+                     maxlength="15"/>
+                    <div class="error"></div>
                 </div>
             </div>
             <div class="row">
@@ -46,6 +43,7 @@
             </div>
         </div>
     </form>
+    <script src="{% static 'js/loginvalidate.js' %}"></script>
 </body>
 </html>
 {% endblock %}      <!--End of a body block-->

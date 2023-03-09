@@ -17,37 +17,42 @@ function validateForm(){
     var returnval = true;
     clearErrors();
 
-    //perform validation and if validation fails, set the value of returnval to false
+    // perform validation and if validation fails, set the value of returnval to false
     var name = document.forms['myForm']["firstname"].value;
     
+    // Show the error of required field
     if (name.length == 0){
-        seterror("fname", "*Length of name cannot be zero!");
+        seterror("fname", "*This field is required!");
         returnval = false;
     }
 
     var email = document.forms['myForm']["email"].value;
 
+    // Show the error of required field
     if (email.length == 0){
-        seterror("femail", "*Length of email cannot be zero!");
+        seterror("femail", "*This field is required!");
         returnval = false;
     }
 
+    // If the length is too long then seterror
     if (email.length>30){
         seterror("femail", "*Email length is too long");
         returnval = false;
     }
 
-    var username = document.forms['myForm']["username"].value;
+    var username = document.forms['myForm']["user"].value;
     
-    if (username.length == 0){
-        seterror("fuser", "*Length of username cannot be zero!");
+    // Show the error of required field
+    if (username == ''){
+        seterror("fuser", "*This field is required!");
         returnval = false;
     }
 
     var password = document.forms['myForm']["password"].value;
 
+    // Show the error of required field
     if (password.length == 0){
-        seterror("fpass", "*Length of password cannot be zero!");
+        seterror("fpass", "*This feild is required!");
         returnval = false;
     }
 
@@ -60,9 +65,7 @@ function validateForm(){
     if (cpassword != password){
         seterror("cpass", "*Password and Confirm password should match!");
         returnval = false;
-        console.log("password")
     }
-
     return returnval;
 }
 
