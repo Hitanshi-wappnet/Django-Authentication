@@ -40,10 +40,10 @@ function validateForm(){
         returnval = false;
     }
 
-    var username = document.forms['myForm']["user"].value;
+    var uname = document.forms['myForm']["username"].value;
     
     // Show the error of required field
-    if (username == ''){
+    if (uname.length == 0){
         seterror("fuser", "*This field is required!");
         returnval = false;
     }
@@ -51,13 +51,13 @@ function validateForm(){
     var password = document.forms['myForm']["password"].value;
 
     // Show the error of required field
-    if (password.length == 0){
-        seterror("fpass", "*This feild is required!");
+    if (password.length < 6){
+        seterror("fpass", "*Password should be atleast 6 characters long!");
         returnval = false;
     }
 
-    if (password.length < 6){
-        seterror("fpass", "*Password should be atleast 6 characters long!");
+    if (password.length == 0){
+        seterror("fpass", "*This feild is required!");
         returnval = false;
     }
 
@@ -68,4 +68,3 @@ function validateForm(){
     }
     return returnval;
 }
-

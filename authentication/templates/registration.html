@@ -1,13 +1,16 @@
-{% extends 'base.html' %}   <!--Extends base.html File-->
-{% load static %}   <!--load static so that we can use static folder files-->
-    {% block css %}     
-    <link rel="stylesheet" href="{% static 'css/registration.css' %}" />
-    {% endblock %}
-    {% block body %}    <!--body block which replaces in base.html body-->
+{% extends 'base.html' %} <!--Extends base.html File-->
+{% load static %} <!--load static so that we can use static folder files-->
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/registration.css' %}" />
+{% endblock %}
+{% block body %} <!--body block which replaces in base.html body-->
+
 <body>
-    <form method="POST" name="myForm" id="form" class="post-form" onsubmit="return validateForm()"
-    action="/home/registration/">
-        {% csrf_token %}        <!--add csrf_token because of POST method-->
+    {% for msg in messages %}
+    <div class="msg"> {{ msg }}</div>
+    {% endfor %}
+    <form method="POST" name="myForm" action="/home/registration/" onsubmit="return validateForm()">
+        {% csrf_token %} <!--add csrf_token because of POST method-->
         <div class="container">
             <br>
             <div class="row">
@@ -16,13 +19,10 @@
                     <h3>Registration Page</h3>
                 </div>
             </div>
-            {% for msg in messages %}
-            <div class="msg"> {{ msg }}</div>
-            {% endfor %}
             <div class="row">
                 <div class="col" id="fname">
                     firstname:<input id="firstname" type="text" class="data" name="firstname" maxlength="20"
-                    value="{{ details.firstname }}">
+                        value="{{ details.firstname }}">
                     <div class="error"></div>
                 </div>
             </div>
@@ -42,8 +42,8 @@
             </div>
             <div class="row">
                 <div class="col" id="fuser">
-                    Username:<input type="text" class="data" name="user" id="id_username" maxlength="15"
-                        value=" {{ details.username }} ">
+                    Username:<input type="text" class="data" name="username" id="id_username" maxlength="15"
+                        value="{{ details.username }}">
                     <div class="error"></div>
                 </div>
             </div>
@@ -64,12 +64,12 @@
             <div class="row">
                 <label class="label"></label>
                 <div class="col">
-                    <button type="submit" class="btn" id="submit" value="Submit">Register</button>
+                    <button type="submit" class="btn" value="Submit">Register</button>
                 </div>
             </div>
         </div>
     </form>
 </body>
-<script src="{% static 'js/validation.js' %}"></script>
+<script src="{% static 'js/formvalidate.js' %}"></script>
 </html>
-{% endblock %}      <!--End of a body block-->
+{% endblock %} <!--End of a body block-->

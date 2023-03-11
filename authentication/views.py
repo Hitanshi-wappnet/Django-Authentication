@@ -97,12 +97,13 @@ def addbooks(request):
         user = request.user
         bookname = request.POST["bookname"]
         authorname = request.POST["authorname"]
-        bookimage = request.FILES.get('bookimage')
+        bookimage = request.FILES.get("bookimage")
 
         details = BookDetails(
             user=user, bookname=bookname, authorname=authorname, bookimage=bookimage
         )
         details.save()
+        messages.success(request, "book added successfully")
         return redirect("/home/dashboard/")
     else:
         return render(request, "dashboard.html")
@@ -116,19 +117,26 @@ def dashboard(request):
 
 
 def edit(request, id):
-    BookDetails.objects.filter(id=id).update(
-        bookname=request.POST["bookname"],
-        authorname=request.POST["authorname"],
-        bookimage=request.FILES.get('bookimage'),
-    )
-    messages.success(request, "Data updated successfully")
-    return redirect("/home/dashboard/")
+    editbook = BookDetails.objects.get(id=id)
+    if request.method == "POST":
+        if request.FILES.get("bookimage") is None:
+            image = BookDetails.objects.get(id=id).bookimage
+        else:
+            image = request.FILES.get("bookimage")
+        editbook.bookname = request.POST.get("bookname")
+        editbook.authorname = request.POST.get("authorname")
+        editbook.bookimage = image
+        editbook.save()
+        messages.success(request, "Data Updated Successfully!!")
+        return redirect("/home/dashboard/")
+    else:
+        return render(request, "dashboard.html")
 
 
 def delete(request, id):
     book = BookDetails.objects.get(id=id)
     book.delete()
-    messages.success(request, "Data Deleted successfully")
+    messages.success(request, "Book Deleted successfully")
     return redirect("/home/dashboard")
 
 
@@ -148,6 +156,9 @@ def changepassword(request):
         u.save()
         messages.success(request, "Your Password has changed successfully")
         update_session_auth_hash(request, u)
+        return redirect("/home/dashboard/")
+    elif newpassword1 != newpassword2:
+        messages.error(request, "Password and Confirm Password didn't Match")
         return redirect("/home/dashboard/")
     else:
         messages.error(request, "Your Password is Wrong")

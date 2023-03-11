@@ -37,8 +37,13 @@
     </ul>
   </nav>
 
-  {% for msg in messages %}
-  <div class="msg"> {{ msg }}</div>
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong>Message:</strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
   {% endfor %}
   <!--Check if user is authenticated then navigate user to dashboard.-->
   {% if user.is_authenticated %}
@@ -62,30 +67,29 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="POST" name="myform" class="post-form" action="{% url 'addbooks' %}"
-          enctype="multipart/form-data" onsubmit="return validateForm()">
+          <form method="POST" name="myForm1" class="post-form" action="{% url 'addbooks' %}"
+            enctype="multipart/form-data" onsubmit="return validateForm()">
             {% csrf_token %}
-            <div class="form-group" id="bn">
+            <div class="form-group" id="bookname">
               <label>Book Name</label>
-              <input type="text" class="form-control" aria-describedby="bookHelp"
-                placeholder="Enter Book Name" name="bookname">
-                <div class="error"></div>
+              <input type="text" class="form-control" aria-describedby="bookHelp" placeholder="Enter Book Name"
+                name="bookname" required>
+              <div class="error"></div>
             </div>
-            <div class="form-group" id="an">
+            <div class="form-group" id="authorname">
               <label>Author Name</label>
-              <input type="text" class="form-control" placeholder="Enter Author name here"
-                name="authorname">
-                <div class="error"></div>
+              <input type="text" class="form-control" placeholder="Enter Author name here" name="authorname" required>
+              <div class="error"></div>
             </div>
-            <div class="form-group" id="bi">
+            <div class="form-group" id="bookimage">
               <label>Add Book Image</label>
-              <input type="file" class="form-control" name="bookimage">
+              <input type="file" class="form-control" name="bookimage" required>
               <div class="error"></div>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="submit" class="btn btn-primary" value="Submit">Save Changes</button>
         </div>
         </form>
       </div>
@@ -110,7 +114,7 @@
         <td width="320px">{{ book.authorname }}</td>
 
         <!--Showing image-->
-        <td width="320px"><img src="/media/books/{{ book.bookimage }}"  width="120" height="120"/></td>
+        <td width="320px"><img src="/media/{{book.bookimage }}" alt="{{book.bookiamge}}" width="120" height="120" /></td>
         <td>
           <!-- Edit Section Starts here-->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleEdit{{ book.id }}">
@@ -129,33 +133,33 @@
                 </div>
 
                 <div class="modal-body">
-                  <form method="POST" name="myform" class="post-form" 
-                  action="{% url 'edit' book.id %}" enctype="multipart/form-data" onsubmit="return validateForm()">
+                  <form method="POST" name="myForm" class="post-form" onsubmit="return validateForm()"
+                    action="{% url 'edit' book.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="form-group" id="bn">
+                    <div class="form-group" id="bookname">
                       <label>Book Name </label>
-                      <input type="text" class="form-control" aria-describedby="bookHelp"
-                        placeholder="Enter Book Name" name="bookname" value="{{ book.bookname }}">
-                        <div class="error"></div>
+                      <input type="text" class="form-control" aria-describedby="bookHelp" placeholder="Enter Book Name"
+                        name="bookname" value="{{ book.bookname }}">
+                      <div class="error"></div>
                     </div>
-                    <div class="form-group" id="an">
+                    <div class="form-group" id="authorname">
                       <label>Author Name</label>
-                      <input type="text" class="form-control" placeholder="Enter Author name here" 
-                      name="authorname" value="{{ book.authorname }}">
-                        <div class="error"></div>
+                      <input type="text" class="form-control" placeholder="Enter Author name here" name="authorname"
+                        value="{{ book.authorname }}">
+                      <div class="error"></div>
                     </div>
-                    <div class="form-group" id="bi">
+                    <div class="form-group" id="bookimage">
                       <label>Add Book Image</label>
-                      <input type="file" class="form-control" name="bookimage"
-                        value="{{book.bookimage}}">
-                        <div class="error"></div>
+                      <input type="file" accept="image/png, image/gif, image/jpeg" class="form-control" 
+                      name="bookimage" value="{{ book.bookimage }}">
+                      <div class="error"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-                </form>
+                 </div>
+                 </form>
               </div>
             </div>
           </div>
@@ -175,7 +179,7 @@
   {% for book in books %}
   <!--below code confirms the deletion function-->
   <div class="modal fade" id="exampleDelete{{book.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-   aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -198,52 +202,44 @@
   {% endif %}
 
   <!--Change Password Section starts here-->
-  <div class="modal fade" id="pass" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Change Password here</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+  <div class="modal fade" id="pass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Change Password here</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-                {% for msg in messages %}
-                <div class="msg"> {{ msg }}</div>
-                {% endfor %}
-                
-                <div class="modal-body">
-                  <!--Added Validation of JavaScript by onsubmit-->
-                  <form method="POST" name="myForm" class="post-form" onsubmit="return validateForm()"
-                  action="{% url 'changepassword'%}">
-                    {% csrf_token %}
-                    <div class="form-group" id="oldpass">
-                      <label for="exampleInputEmail1">Old Password</label>
-                      <input type="password" class="form-control"
-                        placeholder="Enter old password here" name="oldpassword" required>
-                        <div class="error"></div>
-                    </div>
-                    <div class="form-group" id="newpass1">
-                      <label for="exampleInputPassword1">New Password</label>
-                      <input type="password" class="form-control"
-                        placeholder="Enter new Password here" name="newpassword1" required>
-                        <div class="error"></div>
-                    </div>
-                    <div class="form-group" id="newpass2">
-                      <label for="exampleInputPassword2"> Confirm New Password</label>
-                      <input type="password" class="form-control"
-                        placeholder="Confirm new Password here" name="newpassword2" required>
-                        <div class="error"></div>
-                    </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-                </form>
-              </div>
+        <div class="modal-body">
+          <!--Added Validation of JavaScript by onsubmit-->
+          <form method="POST" name="myForm2" class="post-form" onsubmit="return validateForm()"
+            action="{% url 'changepassword'%}">
+            {% csrf_token %}
+            <div class="form-group" id="oldpass">
+              <label for="exampleInputEmail1">Old Password</label>
+              <input type="password" class="form-control" placeholder="Enter old password here" name="oldpassword">
+              <div class="error"></div>
             </div>
-          </div>
-          <script src="{% static 'js/dashvalidate.js' %}"></script>
+            <div class="form-group" id="newpass1">
+              <label for="exampleInputPassword1">New Password</label>
+              <input type="password" class="form-control" placeholder="Enter new Password here" name="newpassword1">
+              <div class="error"></div>
+            </div>
+            <div class="form-group" id="newpass2">
+              <label for="exampleInputPassword2"> Confirm New Password</label>
+              <input type="password" class="form-control" placeholder="Confirm new Password here" name="newpassword2">
+              <div class="error"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'js/dashvalidate.js' %}"></script>
 </body>
 </html>

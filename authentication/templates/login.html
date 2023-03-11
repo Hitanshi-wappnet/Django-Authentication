@@ -8,7 +8,7 @@
 
     <!--Display messages to user-->
     {% for msg in messages %}
-    <strong>{{ msg }}</strong>
+        {{ msg }}
     {% endfor %}
 
     <form method="POST" name="myForm" class="post-form" action="/home/login/" onsubmit="return validateForm()">
@@ -44,6 +44,7 @@
         </div>
     </form>
     <script src="{% static 'js/loginvalidate.js' %}"></script>
+    
 </body>
 </html>
 {% endblock %}      <!--End of a body block-->
