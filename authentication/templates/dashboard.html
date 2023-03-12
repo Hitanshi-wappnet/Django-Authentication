@@ -68,7 +68,7 @@
         </div>
         <div class="modal-body">
           <form method="POST" name="myForm1" class="post-form" action="{% url 'addbooks' %}"
-            enctype="multipart/form-data" onsubmit="return validateForm()">
+            enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group" id="bookname">
               <label>Book Name</label>
@@ -133,8 +133,7 @@
                 </div>
 
                 <div class="modal-body">
-                  <form method="POST" name="myForm" class="post-form" onsubmit="return validateForm()"
-                    action="{% url 'edit' book.id %}" enctype="multipart/form-data">
+                  <form method="POST" name="myForm" class="post-form" action="{% url 'edit' book.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group" id="bookname">
                       <label>Book Name </label>
